@@ -24,8 +24,26 @@ export default function Quiz() {
   const [challengeTwoCompleted, setChallengeTwoCompleted] = useState<ChallengeTwoCompleted>({ challengeTwoCompleted: false });
   const [challengeThreeCompleted, setChallengeThreeCompleted] = useState<ChallengeThreeCompleted>({ challengeThreeCompleted: false });
   const [dailyQuestionAnswered, setDailyQuestionAnswered] = useState<DailyQuestionAnswered>({ dailyQuestionAnswered: false });
+  const [formattedDate, setFormattedDate] = useState<string>('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const todayStr = today;
+
+    if ( todayStr === 'Thu Apr 23 2026') {
+      setFormattedDate('Torsdag d. 23. april');
+    } else if (todayStr === 'Fri Apr 24 2026') {
+      setFormattedDate('Fredag d. 24. april');
+    } else if (todayStr === 'Sat Apr 25 2026') {
+      setFormattedDate('Lørdag d. 25. april');
+    } else if (todayStr === 'Sun Apr 26 2026') {
+      setFormattedDate('Søndag d. 26. april');
+    }
+
+
+    console.log('Today is:', formattedDate);
+  }, [today, formattedDate]);
 
   useEffect(() => {
     if (! localStorage.getItem('isStarted')) {
@@ -159,7 +177,7 @@ export default function Quiz() {
       <Header />
       <section>
         <h1>DXL Missionen</h1>
-        <p className="date">{today}</p>
+        <p className="date" style={{fontSize: '1.5rem', fontWeight: "bold"}}>{formattedDate}</p>
       </section>
       <section id="challenges">
         <div className="challenge-item">

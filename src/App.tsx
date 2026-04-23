@@ -12,49 +12,69 @@ function App() {
   const [isAccessible, setIsAccessible] = useState<boolean>(true);
   const [today] = useState<Date>(new Date());
   const [allowedParticipateDates] = useState<string[]>(['Thu Apr 23 2026', 'Fri Apr 24 2026', 'Sat Apr 25 2026', 'Sun Apr 26 2026']);
+  const [formattedDate, setFormattedDate] = useState<string>('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
-  const getCookie = (name: string) => {
-    const found = document.cookie
-      .split('; ')
-      .find((c) => c.startsWith(name + '='));
-    return found ? found.split('=')[1] : null;
-  };
+    const todayStr = today.toDateString();
 
-  const todayStr = new Date().toDateString();
-  const participatedDate = getCookie('participatedDate');
 
-  const isAllowedDate = allowedParticipateDates.includes(todayStr);
-  const isNewDayComparedToCookie =
-    participatedDate !== null && participatedDate !== todayStr;
 
-  // Only clear when cookie belongs to another day
-  if (isNewDayComparedToCookie) {
-    document.cookie = 'participatedDate=; max-age=0; path=/';
-    document.cookie = 'isStarted=; max-age=0; path=/';
-    document.cookie = 'isParticipated=; max-age=0; path=/';
-    localStorage.removeItem('isStarted');
-    localStorage.removeItem('data');
-  }
+    if ( todayStr === 'Thu Apr 23 2026') {
+      setFormattedDate('Torsdag d. 23. april');
+    } else if (todayStr === 'Fri Apr 24 2026') {
+      setFormattedDate('Fredag d. 24. april');
+    } else if (todayStr === 'Sat Apr 25 2026') {
+      setFormattedDate('Lørdag d. 25. april');
+    } else if (todayStr === 'Sun Apr 26 2026') {
+      setFormattedDate('Søndag d. 26. april');
+    }
 
-  if (!isAllowedDate) {
-    setIsAccessible(false);
-    return;
-  }
 
-  if (localStorage.getItem('isStarted') === 'true' && getCookie('isParticipated') !== 'true') {
-    navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
-    return;
-  }
+    console.log('Today is:', formattedDate);
+  }, [today, formattedDate]);
 
-  if (getCookie('isParticipated') === 'true' || getCookie('isStarted') === 'true') {
-    navigate('/quiz-ended', { viewTransition: true, state: { from: 'home' } });
-    return;
-  }
+  useEffect(() => {
+    const getCookie = (name: string) => {
+      const found = document.cookie
+        .split('; ')
+        .find((c) => c.startsWith(name + '='));
+      return found ? found.split('=')[1] : null;
+    };
 
-  setIsAccessible(true);
+    const todayStr = new Date().toDateString();
+    const participatedDate = getCookie('participatedDate');
+
+    const isAllowedDate = allowedParticipateDates.includes(todayStr);
+    const isNewDayComparedToCookie =
+      participatedDate !== null && participatedDate !== todayStr;
+
+    // Only clear when cookie belongs to another day
+    if (isNewDayComparedToCookie) {
+      document.cookie = 'participatedDate=; max-age=0; path=/';
+      document.cookie = 'isStarted=; max-age=0; path=/';
+      document.cookie = 'isParticipated=; max-age=0; path=/';
+      localStorage.removeItem('isStarted');
+      localStorage.removeItem('data');
+    }
+
+    if (!isAllowedDate) {
+      setIsAccessible(false);
+      return;
+    }
+
+    if (localStorage.getItem('isStarted') === 'true' && getCookie('isParticipated') !== 'true') {
+      navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
+      return;
+    }
+
+    if (getCookie('isParticipated') === 'true' || getCookie('isStarted') === 'true') {
+      navigate('/quiz-ended', { viewTransition: true, state: { from: 'home' } });
+      return;
+    }
+
+    setIsAccessible(true);
 }, [navigate, allowedParticipateDates]);
 
 
@@ -85,7 +105,7 @@ function App() {
           </div>
             <div>
               <h1>DXL Missionen</h1>
-              {isAccessible ? <p>{today.toDateString()}</p> : <p>Website is not accessible</p>}
+              {isAccessible ? <p style={{fontSize: '1.5rem', fontWeight: "bold"}}>{formattedDate}</p> : <p>Website is not accessible</p>}
               <p>
                 <strong>Danish Xbox League</strong> afholder til dette års Gamebox Festival en konkurrence hver dag hvor du får chancen for at vinde fede XBOX præmier
               </p>

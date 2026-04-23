@@ -10,7 +10,7 @@ import Header from './Components/Base/Header'
 
 function App() {
   const [isAccessible, setIsAccessible] = useState<boolean>(true);
-  const [today, setToday] = useState<Date>(new Date());
+  const [today] = useState<Date>(new Date());
 
   const navigate = useNavigate();
 

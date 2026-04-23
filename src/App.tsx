@@ -131,7 +131,7 @@ function App() {
           <li>Vinderen trækkes blandt dagens gyldige deltagelser.</li>
         </ul>
       </section>
-      <section>
+      <section id="get-started">
         <h3>Skal vi komme igang?</h3>
         <p>Er du klar til at deltage i konkurrencen?</p>
         <button onClick={handleStart} className="cta-button">Ja, lad os komme igang!</button>

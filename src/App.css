@@ -217,6 +217,13 @@ header {
   gap: 30px;
   margin-top: 32px;
 
+  @media (max-width: 1024px) {
+    gap: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
   .price {
     display: flex;
     flex-direction: column;
@@ -235,6 +242,20 @@ header {
       border-radius: 8px;
       background-color: green;
     }
+  }
+}
+
+#get-started {
+  margin-bottom: 32px;
+  button {
+    margin-top: 12px;
+    background-color: green;
+    box-shadow: none;
+    border-color: green;
+    border-radius: 200px;
+    padding: 12px 24px;
+    color: #ffffff;
+    font-size: 20px;
   }
 }
 

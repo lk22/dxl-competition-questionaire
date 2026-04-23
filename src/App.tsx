@@ -11,55 +11,65 @@ import Header from './Components/Base/Header'
 function App() {
   const [isAccessible, setIsAccessible] = useState<boolean>(true);
   const [today] = useState<Date>(new Date());
+  const [allowedParticipateDates] = useState<string[]>(['Thu Apr 23 2026', 'Fri Apr 24 2026', 'Sat Apr 25 2026', 'Sun Apr 26 2026']);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+  const getCookie = (name: string) => {
+    const found = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith(name + '='));
+    return found ? found.split('=')[1] : null;
+  };
 
-    const cookieName = (cookieName: string) => {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(`${cookieName}=`)) {
-          return cookie.split('=')[1];
-        }
-      }
-      return null;
-    }
+  const todayStr = new Date().toDateString();
+  const participatedDate = getCookie('participatedDate');
 
-    if (
-      (localStorage.getItem('isStarted') && localStorage.getItem('isStarted') === 'true') && cookieName('isParticipated') !== 'true'
-    ) {
-      navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
-    } else if (cookieName('isParticipated') === 'true' || cookieName('isStarted') === 'true') {
-      navigate('/quiz-ended', { viewTransition: true, state: { from: 'home' } });
-    } else {
-      handleAccessibility();
-    }
-  }, [navigate]);
+  const isAllowedDate = allowedParticipateDates.includes(todayStr);
+  const isNewDayComparedToCookie =
+    participatedDate !== null && participatedDate !== todayStr;
 
-  const handleAccessibility = () => {
-    const today = new Date();
-    // we need to handle certain dates where the event is active but the website should be accessible for everyone, e.g. during the event itself
-
-    if (today.toDateString() === 'Fri Apr 24 2026' || today.toDateString() === 'Sat Apr 25 2026' || today.toDateString() === 'Sun Apr 26 2026') {
-      setIsAccessible(true);
-    } else {
-      setIsAccessible(false);
-    }
+  // Only clear when cookie belongs to another day
+  if (isNewDayComparedToCookie) {
+    document.cookie = 'participatedDate=; max-age=0; path=/';
+    document.cookie = 'isStarted=; max-age=0; path=/';
+    document.cookie = 'isParticipated=; max-age=0; path=/';
+    localStorage.removeItem('isStarted');
+    localStorage.removeItem('data');
   }
+
+  if (!isAllowedDate) {
+    setIsAccessible(false);
+    return;
+  }
+
+  if (localStorage.getItem('isStarted') === 'true' && getCookie('isParticipated') !== 'true') {
+    navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
+    return;
+  }
+
+  if (getCookie('isParticipated') === 'true' || getCookie('isStarted') === 'true') {
+    navigate('/quiz-ended', { viewTransition: true, state: { from: 'home' } });
+    return;
+  }
+
+  setIsAccessible(true);
+}, [navigate, allowedParticipateDates]);
+
 
   const handleStart = () => {
     localStorage.setItem('isStarted', 'true');
+    document.cookie = 'isStarted=true; max-age=86400; path=/'; // expires in 1 day
     // set a cookie that expires in 1 day to indicate that the user has started the quiz, this is used to prevent users from accessing the quiz page without starting the quiz from the home page
 
     // set expiration to 1 day but needs to reset at 00:00 every day, so we need to calculate the remaining time until the end of the day and set the max-age accordingly
     const now = new Date();
     const endOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
     const maxAge = Math.floor((endOfDay.getTime() - now.getTime()) / 1000);
-
+    document.cookie = `participatedDate=${now.toDateString()}; max-age=${maxAge}; path=/`;
     document.cookie = `isStarted=true; max-age=${maxAge}; path=/`;
-    navigate('/started', { viewTransition: true, state: { from: 'home' } });
+    navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
   }
 
   return (

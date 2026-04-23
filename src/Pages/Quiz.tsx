@@ -136,6 +136,13 @@ export default function Quiz() {
           dailyQuestionAnswered: dailyQuestionAnswered.dailyQuestionAnswered,
           dailyQuestionAnswer: dailyQuestionAnswer.dailyQuestionAnswer,
         })
+      }).then(response => {
+        if (! response.ok) {
+          alert('Der skete en fejl under indsendelsen af din deltagelse. Prøv igen senere.');
+          throw new Error('Network response was not ok');
+        }
+
+        return response.json();
       })
     } catch (error) {
       console.error('Error submitting participation:', error);
@@ -143,7 +150,7 @@ export default function Quiz() {
       return;
     }
 
-    navigate('/ended', { viewTransition: true, state: { from: 'quiz' } });
+    navigate('/quiz-ended', { viewTransition: true, state: { from: 'quiz' } });
   }
 
   return (
@@ -169,18 +176,18 @@ export default function Quiz() {
                 <label htmlFor="dailyQuestion">A: Mellem 570 og 680 medlemmer</label>
               </div>
               <div className="check-input">
-                <input type="radio" name="dailyQuestion" value="B" id="dailyQuestion" onChange={() => {
+                <input type="radio" name="dailyQuestion" value="B" id="dailyQuestionTwo" onChange={() => {
                   setDailyQuestionAnswer({ dailyQuestionAnswer: 'B' });
                   setDailyQuestionAnswered({ dailyQuestionAnswered: true });
                 }} />
-                <label htmlFor="dailyQuestion">B: Mellem 870 og 1.140 medlemmer</label>
+                <label htmlFor="dailyQuestionTwo">B: Mellem 870 og 1.140 medlemmer</label>
               </div>
               <div className="check-input">
-                <input type="radio" name="dailyQuestion" value="C" id="dailyQuestion" onChange={() => {
+                <input type="radio" name="dailyQuestion" value="C" id="dailyQuestionThree" onChange={() => {
                   setDailyQuestionAnswer({ dailyQuestionAnswer: 'C' });
                   setDailyQuestionAnswered({ dailyQuestionAnswered: true });
                 }} />
-                <label htmlFor="dailyQuestion">C: Mellem 1.280 og 1.370 medlemmer</label>
+                <label htmlFor="dailyQuestionThree">C: Mellem 1.280 og 1.370 medlemmer</label>
               </div>
             </form>
           </div>

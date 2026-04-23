@@ -120,6 +120,29 @@ export default function Quiz() {
       completedParticipation: true
     }))
 
+    try {
+      fetch('https://danishxboxleague.dk/wp-json/dxl/api/v1/competition/participate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          challengeOneCompleted: challengeOneCompleted.challengeOneCompleted,
+          challengeTwoCompleted: challengeTwoCompleted.challengeTwoCompleted,
+          challengeThreeCompleted: challengeThreeCompleted.challengeThreeCompleted,
+          dailyQuestionAnswered: dailyQuestionAnswered.dailyQuestionAnswered,
+          dailyQuestionAnswer: dailyQuestionAnswer.dailyQuestionAnswer,
+        })
+      })
+    } catch (error) {
+      console.error('Error submitting participation:', error);
+      alert('Der skete en fejl under indsendelsen af din deltagelse. Prøv igen senere.');
+      return;
+    }
+
     navigate('/ended', { viewTransition: true, state: { from: 'quiz' } });
   }
 

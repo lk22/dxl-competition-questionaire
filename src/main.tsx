@@ -11,8 +11,8 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/started" element={<Quiz />} />
-        <Route path="/ended" element={<End />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/quiz-ended" element={<End />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,

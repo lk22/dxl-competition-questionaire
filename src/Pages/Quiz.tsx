@@ -135,6 +135,7 @@ export default function Quiz() {
           challengeThreeCompleted: challengeThreeCompleted.challengeThreeCompleted,
           dailyQuestionAnswered: dailyQuestionAnswered.dailyQuestionAnswered,
           dailyQuestionAnswer: dailyQuestionAnswer.dailyQuestionAnswer,
+          completedDate: new Date().toISOString()
         })
       }).then(response => {
         if (! response.ok) {
@@ -142,7 +143,7 @@ export default function Quiz() {
           throw new Error('Network response was not ok');
         }
 
-        return response.json();
+
       })
     } catch (error) {
       console.error('Error submitting participation:', error);

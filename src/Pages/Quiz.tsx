@@ -73,7 +73,6 @@ export default function Quiz() {
 
     const isFormValid = name.trim() !== '' &&
                         email.trim() !== '' &&
-                        phone.trim() !== '' &&
                         challengeOneCompleted.challengeOneCompleted &&
                         challengeTwoCompleted.challengeTwoCompleted &&
                         challengeThreeCompleted.challengeThreeCompleted &&
@@ -226,7 +225,7 @@ export default function Quiz() {
           </div>
           <div className="input-group">
             <label htmlFor="phone">Telefonnummer</label>
-            <input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} required />
+            <input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} />
           </div>
           <button type="submit">Deltag i konkurrencen</button>
         </form>

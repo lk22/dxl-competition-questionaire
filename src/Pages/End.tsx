@@ -1,0 +1,31 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import SuccessParticipatedImg from '../assets/success_participated.png';
+
+// components
+import Header from '../Components/Base/Header';
+
+export default function End() {
+  const [name, setName] = useState<string>('');
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('data');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setName(parsedData.name);
+    }
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <section id="center">
+        <img src={SuccessParticipatedImg} alt="Success"/>
+        <h1>Tak for din deltagelse!</h1>
+        <p>Tak for din deltagelse, {name}!</p>
+        <p>Vi ønsker dig held og lykke i lodtrækningen!</p>
+        <p>Vi gemmer dine oplysninger indtil dagens lodtrækning er afsluttet.</p>
+      </section>
+    </>
+  );
+}

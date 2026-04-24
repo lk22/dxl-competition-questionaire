@@ -19,7 +19,7 @@ export default function End() {
     <>
       <Header />
       <section id="center">
-        <img src={SuccessParticipatedImg} alt="Success"/>
+        <img src={SuccessParticipatedImg} alt="Success" height={250} width={250}/>
         <h1>Tak for din deltagelse!</h1>
         <p>Tak for din deltagelse, {name}!</p>
         <p>Vi ønsker dig held og lykke i lodtrækningen!</p>

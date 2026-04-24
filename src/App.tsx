@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import XboxController from './assets/xbox_controller 1.png'
 import XboxTshirt from './assets/xbox_tshirt.png'
+import SuccessParticipatedImg from './assets/success_participated.png';
 import './App.css'
 
 import {useNavigate} from 'react-router'
@@ -14,12 +15,39 @@ function App() {
   const [allowedParticipateDates] = useState<string[]>(['Thu Apr 23 2026', 'Fri Apr 24 2026', 'Sat Apr 25 2026', 'Sun Apr 26 2026']);
   const [formattedDate, setFormattedDate] = useState<string>('');
 
+  // get isParticipated Cookie and participatedDate cookie, if participatedDate cookie is not equal to today's date, then clear the isParticipated cookie and participatedDate cookie, this is to ensure that users can participate again on the next day of the festival
+  const isParticipatedCookie = document.cookie.split('; ').find(row => row.startsWith('isParticipated='));
+  const participatedDateCookie = document.cookie.split('; ').find(row => row.startsWith('participatedDate='));
+
+  console.log('isParticipatedCookie:', isParticipatedCookie);
+  console.log('participatedDateCookie:', participatedDateCookie);
+
   const navigate = useNavigate();
+
+  const getCookie = (name: string) => {
+    const found = document.cookie.split(';').find(c => c.startsWith(name + '='));
+    return found ? found.split('=')[1] : null;
+  }
+
+  // const resetCookiesIfNewDay = () => {
+  //   const todayStr = new Date().toDateString();
+  //   const participatedDate = getCookie('participatedDate');
+
+  //   const isNewDayComparedToCookie =
+  //     participatedDate !== null && participatedDate !== todayStr;
+
+  //   // Only clear when cookie belongs to another day
+  //   if (isNewDayComparedToCookie) {
+  //     document.cookie = 'participatedDate=; max-age=0; path=/';
+  //     document.cookie = 'isStarted=; max-age=0; path=/';
+  //     document.cookie = 'isParticipated=; max-age=0; path=/';
+  //     localStorage.removeItem('isStarted');
+  //     localStorage.removeItem('data');
+  //   }
+  // }
 
   useEffect(() => {
     const todayStr = today.toDateString();
-
-
 
     if ( todayStr === 'Thu Apr 23 2026') {
       setFormattedDate('Torsdag d. 23. april');
@@ -31,18 +59,10 @@ function App() {
       setFormattedDate('Søndag d. 26. april');
     }
 
-
     console.log('Today is:', formattedDate);
   }, [today, formattedDate]);
 
   useEffect(() => {
-    const getCookie = (name: string) => {
-      const found = document.cookie
-        .split('; ')
-        .find((c) => c.startsWith(name + '='));
-      return found ? found.split('=')[1] : null;
-    };
-
     const todayStr = new Date().toDateString();
     const participatedDate = getCookie('participatedDate');
 
@@ -77,7 +97,6 @@ function App() {
     setIsAccessible(true);
 }, [navigate, allowedParticipateDates]);
 
-
   const handleStart = () => {
     localStorage.setItem('isStarted', 'true');
     document.cookie = 'isStarted=true; max-age=86400; path=/'; // expires in 1 day
@@ -95,7 +114,7 @@ function App() {
   return (
     <>
       <Header />
-        {isAccessible ? (
+        {!isParticipatedCookie ? (
           <>
         <section>
           <div className="hero">
@@ -156,9 +175,10 @@ function App() {
           </>
         ) : (
           <>
-            <section>
-              <h1>DXL Missionen</h1>
-              <p>Vi er kede af det, men denne side er kun tilgængelig under selve festivalen. som forløber sig i datoerne (24/04 - 26/04)</p>
+            <section id="center">
+              <img src={SuccessParticipatedImg} alt="Success" height={250} width={250}/>
+              <p>Det ser ud til du allerede har deltaget i dagens konkurrence.</p>
+              <p>Vi har lodtrækning hver dag under festivalen, så du kan prøve igen i morgen!</p>
             </section>
           </>
         )}

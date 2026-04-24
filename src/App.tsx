@@ -11,6 +11,7 @@ import Header from './Components/Base/Header'
 
 function App() {
   const [isAccessible, setIsAccessible] = useState<boolean>(true);
+  const [isParticipated, setIsParticipated] = useState<boolean>(false);
   const [today] = useState<Date>(new Date());
   const [allowedParticipateDates] = useState<string[]>(['Thu Apr 23 2026', 'Fri Apr 24 2026', 'Sat Apr 25 2026', 'Sun Apr 26 2026']);
   const [formattedDate, setFormattedDate] = useState<string>('');
@@ -22,6 +23,9 @@ function App() {
   console.log('isParticipatedCookie:', isParticipatedCookie);
   console.log('participatedDateCookie:', participatedDateCookie);
 
+  console.log('Today is:', today.toDateString());
+  console.log(isParticipated)
+
   const navigate = useNavigate();
 
   const getCookie = (name: string) => {
@@ -29,25 +33,12 @@ function App() {
     return found ? found.split('=')[1] : null;
   }
 
-  // const resetCookiesIfNewDay = () => {
-  //   const todayStr = new Date().toDateString();
-  //   const participatedDate = getCookie('participatedDate');
-
-  //   const isNewDayComparedToCookie =
-  //     participatedDate !== null && participatedDate !== todayStr;
-
-  //   // Only clear when cookie belongs to another day
-  //   if (isNewDayComparedToCookie) {
-  //     document.cookie = 'participatedDate=; max-age=0; path=/';
-  //     document.cookie = 'isStarted=; max-age=0; path=/';
-  //     document.cookie = 'isParticipated=; max-age=0; path=/';
-  //     localStorage.removeItem('isStarted');
-  //     localStorage.removeItem('data');
-  //   }
-  // }
-
   useEffect(() => {
-    const todayStr = today.toDateString();
+    const todayStr = new Date().toDateString();
+    const participatedDate = getCookie('participatedDate');
+
+    const isAllowedDate = allowedParticipateDates.includes(todayStr);
+    const isNewDayComparedToCookie = participatedDate !== todayStr;
 
     if ( todayStr === 'Thu Apr 23 2026') {
       setFormattedDate('Torsdag d. 23. april');
@@ -59,24 +50,16 @@ function App() {
       setFormattedDate('Søndag d. 26. april');
     }
 
-    console.log('Today is:', formattedDate);
-  }, [today, formattedDate]);
-
-  useEffect(() => {
-    const todayStr = new Date().toDateString();
-    const participatedDate = getCookie('participatedDate');
-
-    const isAllowedDate = allowedParticipateDates.includes(todayStr);
-    const isNewDayComparedToCookie =
-      participatedDate !== null && participatedDate !== todayStr;
-
     // Only clear when cookie belongs to another day
     if (isNewDayComparedToCookie) {
+      console.log('New day detected, clearing participation cookies');
       document.cookie = 'participatedDate=; max-age=0; path=/';
       document.cookie = 'isStarted=; max-age=0; path=/';
       document.cookie = 'isParticipated=; max-age=0; path=/';
       localStorage.removeItem('isStarted');
       localStorage.removeItem('data');
+    } else {
+      setIsParticipated(getCookie('isParticipated') === 'true');
     }
 
     if (!isAllowedDate) {
@@ -86,11 +69,6 @@ function App() {
 
     if (localStorage.getItem('isStarted') === 'true' && getCookie('isParticipated') !== 'true') {
       navigate('/quiz', { viewTransition: true, state: { from: 'home' } });
-      return;
-    }
-
-    if (getCookie('isParticipated') === 'true' || getCookie('isStarted') === 'true') {
-      navigate('/quiz-ended', { viewTransition: true, state: { from: 'home' } });
       return;
     }
 

@@ -4,7 +4,7 @@ import XboxTshirt from './assets/xbox_tshirt.png'
 import SuccessParticipatedImg from './assets/success_participated.png';
 import './App.css'
 
-import {useNavigate, useLocation} from 'react-router'
+import {useNavigate} from 'react-router'
 
 // Components
 import Header from './Components/Base/Header'

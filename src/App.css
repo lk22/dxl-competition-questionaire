@@ -357,3 +357,11 @@ section.allready-participated {
   font-size: 26px;
   text-align: center;
 }
+section.end-page {
+  font-size: 26px;
+  text-align: center;
+
+  .participated-name {
+    text-transform: capitalize;
+  }
+}

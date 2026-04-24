@@ -111,7 +111,7 @@ function App() {
               </p>
               <p><strong>Fredag: 19:00</strong></p>
               <p><strong>Lørdag: 19:00</strong></p>
-              <p><strong>Søndag: 18:00</strong></p>
+              <p><strong>Søndag: 17:00</strong></p>
             </div>
           </section>
           <section className="prices-grid">

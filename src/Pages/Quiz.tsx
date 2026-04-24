@@ -26,6 +26,8 @@ export default function Quiz() {
   const [dailyQuestionAnswered, setDailyQuestionAnswered] = useState<DailyQuestionAnswered>({ dailyQuestionAnswered: false });
   const [formattedDate, setFormattedDate] = useState<string>('');
 
+  console.log(challengeOneCompleted, challengeTwoCompleted, challengeThreeCompleted, dailyQuestionAnswered, dailyQuestionAnswer);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,6 +86,16 @@ export default function Quiz() {
   const handleChallengeThreeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setChallengeThreeCompleted({ challengeThreeCompleted: true });
+  }
+
+  const handleCompletedMessage = (challenge: string) => {
+    if(challenge === 'challengeOne') {
+      return challengeOneCompleted.challengeOneCompleted ? 'Denne opgave er markeret som løst' : '';
+    } else if (challenge === 'challengeTwo') {
+      return challengeTwoCompleted.challengeTwoCompleted ? 'Denne opgave er markeret som løst' : '';
+    } else if (challenge === 'challengeThree') {
+      return challengeThreeCompleted.challengeThreeCompleted ? 'Denne opgave er markeret som løst' : '';
+    }
   }
 
   const handleParticipationSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -180,9 +192,12 @@ export default function Quiz() {
         <p className="date" style={{fontSize: '1.5rem', fontWeight: "bold"}}>{formattedDate}</p>
       </section>
       <section id="challenges">
-        <div className="challenge-item">
+        <div className="challenge-item daily-question-challenge">
           <div className="item-header">
             <h3>Dagens spørgsmål</h3>
+            <p>
+              {handleCompletedMessage('dailyQuestion')}
+            </p>
           </div>
           <div className="item-body">
             <p>Hvor mange medlemmer er der cirka i Danish Xbox League's facebook gruppe?</p>
@@ -213,10 +228,13 @@ export default function Quiz() {
         </div>
         <div className="challenge-item">
           <div className="item-header">
-            <h3>Spil Cornhold</h3>
+            <h3>Spil Cornhole</h3>
+            <p>
+              {handleCompletedMessage('challengeOne')}
+            </p>
           </div>
-          <div className="item-body approval-challenge">
-            <p>Tag et spil cornhole på standen, du har enten mulighed for at spille mod din partner eller mod et medlem på standen.</p>
+          <div className={`item-body approval-challenge ${challengeOneCompleted.challengeOneCompleted ? 'challenge-completed' : ''}`}>
+            <p>For at fuldfører denne opgave skal du spille mindst 1 spil i cornhole, dette kan spilles sammen med en kammerat, eller mod et medlem på standen.</p>
             <form action="" onSubmit={handleChallengeOneSubmit}>
               <div className="check-input">
                 <input type="checkbox" name="challengeOne" id="challengeOne" onChange={(e) => {
@@ -230,8 +248,11 @@ export default function Quiz() {
         <div className="challenge-item">
           <div className="item-header">
             <h3>Tag et billede ved My-Selfie kammeraet</h3>
+            <p>
+              {handleCompletedMessage('challengeTwo')}
+            </p>
           </div>
-          <div className="item-body approval-challenge">
+          <div className={`item-body approval-challenge ${challengeTwoCompleted.challengeTwoCompleted ? 'challenge-completed' : ''}`}>
             <p>For at fuldføre denne opgave skal du tage et billede af dig selv eller med dig selv og en anden med My-Selfie kameraet</p>
             <form action="" onSubmit={handleChallengeTwoSubmit}>
               <div className="check-input">
@@ -246,8 +267,11 @@ export default function Quiz() {
         <div className="challenge-item">
           <div className="item-header">
             <h3>Prøv et spil på en XBOX</h3>
+            <p>
+              {handleCompletedMessage('challengeThree')}
+            </p>
           </div>
-          <div className="item-body approval-challenge">
+          <div className={`item-body approval-challenge ${challengeThreeCompleted.challengeThreeCompleted ? 'challenge-completed' : ''}`}>
             <p>For at udføre denne opgave, skal du spille på en af de udvalgte XBOX maskiner der står rundt på DXL's stand, hvor du kan prøve forskellige typer spil.</p>
             <form action="" onSubmit={handleChallengeThreeSubmit}>
               <div className="check-input">
@@ -263,9 +287,10 @@ export default function Quiz() {
       <section id="participation">
         <h3>Kontakt oplysninger</h3>
         <p>Vi skal bruge nogle kontaktoplysninger for at kunne kontakte dig hvis du vinder dagens præmie.</p>
+        <p>For at kunne kontakte dig skal vi som minimum bruge en email adresse eller telefonnummer</p>
         <form onSubmit={handleParticipationSubmit}>
           <div className="input-group">
-            <label htmlFor="name">Fulde navn</label>
+            <label htmlFor="name">Fulde navn *</label>
             <input type="text" name="name" id="name" value={name} onChange={(e) => setName(e.currentTarget.value)} required />
           </div>
           <div className="input-group">

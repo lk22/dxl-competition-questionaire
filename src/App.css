@@ -265,11 +265,28 @@ header {
 
 #challenges {
   .challenge-item {
+    margin-top: 40px;
+
+    &.daily-question-challenge {
+      form {
+        input[type='radio'] {
+          height: 20px;
+          width: 20px;
+          accent-color: green;
+        }
+      }
+    }
+
     .item-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 12px;
+      width: 100%;
+
+      p {
+        text-align: right;
+      }
 
       h3 {
         font-size: 32px;
@@ -280,27 +297,33 @@ header {
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       color: #000000;
-      border: 2px solid green;
+      border: 3px solid green;
       padding-block: 24px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 15px;
+      transition: ease-in-out 0.1s;
 
       &.approval-challenge {
         min-height: 200px;
       }
       &.challenge-completed {
-        background-color: #d4edda;
+        background-color: green;
         border: 1px solid #c3e6cb;
+        color: #ffffff;
       }
 
       form {
         .check-input{
           margin-bottom: 10px;
+          input[type="checkbox"] {
+            height: 20px;
+            width: 20px;
+          }
           label {
             margin-left: 8px;
-            font-size: 16px;
+            font-size: 20px;
           }
         }
       }
@@ -313,6 +336,9 @@ header {
   h3 {
     font-size: 32px;
     margin-bottom: 12px;
+  }
+  form {
+    margin-top: 20px;
   }
   input {
     width: 100%;

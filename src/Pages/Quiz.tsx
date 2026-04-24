@@ -215,7 +215,7 @@ export default function Quiz() {
           <div className="item-header">
             <h3>Spil Cornhold</h3>
           </div>
-          <div className="item-body">
+          <div className="item-body approval-challenge">
             <p>Tag et spil cornhole på standen, du har enten mulighed for at spille mod din partner eller mod et medlem på standen.</p>
             <form action="" onSubmit={handleChallengeOneSubmit}>
               <div className="check-input">
@@ -231,7 +231,7 @@ export default function Quiz() {
           <div className="item-header">
             <h3>Tag et billede ved My-Selfie kammeraet</h3>
           </div>
-          <div className="item-body">
+          <div className="item-body approval-challenge">
             <p>For at fuldføre denne opgave skal du tage et billede af dig selv eller med dig selv og en anden med My-Selfie kameraet</p>
             <form action="" onSubmit={handleChallengeTwoSubmit}>
               <div className="check-input">
@@ -247,7 +247,7 @@ export default function Quiz() {
           <div className="item-header">
             <h3>Prøv et spil på en XBOX</h3>
           </div>
-          <div className="item-body">
+          <div className="item-body approval-challenge">
             <p>For at udføre denne opgave, skal du spille på en af de udvalgte XBOX maskiner der står rundt på DXL's stand, hvor du kan prøve forskellige typer spil.</p>
             <form action="" onSubmit={handleChallengeThreeSubmit}>
               <div className="check-input">

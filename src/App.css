@@ -356,6 +356,11 @@ header {
 section.allready-participated {
   font-size: 26px;
   text-align: center;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
   img {
     margin-bottom: 40px;
     width: 450px;
@@ -373,6 +378,7 @@ section.allready-participated {
 }
 section.end-page {
   font-size: 26px;
+  line-height: 34px;
   text-align: center;
 
   @media (max-width: 1024px) {

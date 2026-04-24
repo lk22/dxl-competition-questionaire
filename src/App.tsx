@@ -27,24 +27,11 @@ function App() {
   console.log(isParticipated)
 
   const navigate = useNavigate();
-  const routerLocation = useLocation();
-  const isRefresh = routerLocation.state && routerLocation.state.from === 'home';
 
   const getCookie = (name: string) => {
     const found = document.cookie.split(';').find(c => c.startsWith(name + '='));
     return found ? found.split('=')[1] : null;
   }
-
-  useEffect(() => {
-    const wasVisited = sessionStorage.getItem('wasVisited');
-    if (wasVisited) {
-      console.log('Page was refreshed');
-      sessionStorage.removeItem('wasVisited');
-    } else {
-      console.log('First time visiting the page');
-      sessionStorage.setItem('wasVisited', 'true');
-    }
-  })
 
   useEffect(() => {
     const todayStr = new Date().toDateString();

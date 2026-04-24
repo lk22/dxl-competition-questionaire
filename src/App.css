@@ -352,3 +352,8 @@ header {
     cursor: pointer;
   }
 }
+
+section.allready-participated {
+  font-size: 26px;
+  text-align: center;
+}

@@ -29,16 +29,20 @@ function App() {
   const navigate = useNavigate();
 
   const getCookie = (name: string) => {
+    console.log(`Getting cookie for name: ${name}`);
     const found = document.cookie.split(';').find(c => c.startsWith(name + '='));
+    console.log(`Cookie for ${name}:`, found);
     return found ? found.split('=')[1] : null;
   }
 
   useEffect(() => {
     const todayStr = new Date().toDateString();
     const participatedDate = getCookie('participatedDate');
+    console.log('participatedDate from cookie:', participatedDate);
+    console.log(participatedDate !== todayStr ? 'participatedDate cookie is from another day' : 'participatedDate cookie is from today');
 
     const isAllowedDate = allowedParticipateDates.includes(todayStr);
-    const isNewDayComparedToCookie = participatedDate !== todayStr;
+    const isNewDayComparedToCookie = false;
 
     if ( todayStr === 'Thu Apr 23 2026') {
       setFormattedDate('Torsdag d. 23. april');
@@ -92,7 +96,7 @@ function App() {
   return (
     <>
       <Header />
-        {!isParticipatedCookie ? (
+        {!isParticipatedCookie && !participatedDateCookie ? (
           <>
         <section>
           <div className="hero">
@@ -150,8 +154,8 @@ function App() {
           </>
         ) : (
           <>
-            <section id="center">
-              <img src={SuccessParticipatedImg} alt="Success" height={250} width={250}/>
+            <section id="center" className="allready-participated">
+              <img src={SuccessParticipatedImg} alt="Success" />
               <p>Det ser ud til du allerede har deltaget i dagens konkurrence.</p>
               <p>Vi har lodtrækning hver dag under festivalen, så du kan prøve igen i morgen!</p>
             </section>

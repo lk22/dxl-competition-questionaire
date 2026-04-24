@@ -135,6 +135,7 @@ export default function Quiz() {
 
     document.cookie = '';
     document.cookie = 'isParticipated=true; max-age=31536000; path=/'; // set a cookie that expires in 1 year to indicate that the user has participated in the quiz, this is used to prevent users from accessing the quiz page without starting the quiz from the home page
+    document.cookie = `participatedDate=${today}; max-age=31536000; path=/`; // set a cookie that expires in 1 year to indicate the date of participation, this is used to clear the participation cookie when a new day starts
 
     localStorage.removeItem('isStarted');
     localStorage.setItem('isParticipated', 'true');

@@ -4,7 +4,7 @@ import XboxTshirt from './assets/xbox_tshirt.png'
 import SuccessParticipatedImg from './assets/success_participated.png';
 import './App.css'
 
-import {useNavigate} from 'react-router'
+import {useNavigate, useLocation} from 'react-router'
 
 // Components
 import Header from './Components/Base/Header'
@@ -27,11 +27,24 @@ function App() {
   console.log(isParticipated)
 
   const navigate = useNavigate();
+  const routerLocation = useLocation();
+  const isRefresh = routerLocation.state && routerLocation.state.from === 'home';
 
   const getCookie = (name: string) => {
     const found = document.cookie.split(';').find(c => c.startsWith(name + '='));
     return found ? found.split('=')[1] : null;
   }
+
+  useEffect(() => {
+    const wasVisited = sessionStorage.getItem('wasVisited');
+    if (wasVisited) {
+      console.log('Page was refreshed');
+      sessionStorage.removeItem('wasVisited');
+    } else {
+      console.log('First time visiting the page');
+      sessionStorage.setItem('wasVisited', 'true');
+    }
+  })
 
   useEffect(() => {
     const todayStr = new Date().toDateString();
@@ -122,13 +135,13 @@ function App() {
               <div className="image-item">
                   <img src={XboxController} alt="Xbox Controller" height={400} />
               </div>
-              <h3>Xbox Controller</h3>
+              <h3 className="item-heading">Xbox Controller</h3>
             </div>
             <div className="price">
               <div className="image-item">
                   <img src={XboxTshirt} alt="Xbox T-shirt" height={300} />
               </div>
-              <h3>Xbox T-shirt</h3>
+              <h3 className='item-heading'>Xbox T-shirt</h3>
             </div>
           </section>
           <section>

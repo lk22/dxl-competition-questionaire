@@ -360,6 +360,12 @@ section.allready-participated {
     margin-bottom: 40px;
     width: 450px;
     height: 450px;
+
+    @media (max-width: 1024px) {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 20px;
+    }
   }
   p {
     width: 100%;
@@ -368,6 +374,10 @@ section.allready-participated {
 section.end-page {
   font-size: 26px;
   text-align: center;
+
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
 
   .participated-name {
     text-transform: capitalize;

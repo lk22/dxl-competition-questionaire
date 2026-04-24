@@ -164,7 +164,7 @@ function App() {
           <>
             <section id="center" className="allready-participated">
               <motion.div initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-                <img src={SuccessParticipatedImg} alt="Success" />
+                <img src={SuccessParticipatedImg} alt="Success"/>
                 <h1>Du har allerede deltaget i dagens konkurrence</h1>
                 <p>Det ser ud til du allerede har deltaget i dagens konkurrence.</p>
                 <p>Vi har lodtrækning hver dag under festivalen, så du kan prøve igen i morgen!</p>

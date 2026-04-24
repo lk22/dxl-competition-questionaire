@@ -4,6 +4,8 @@ import XboxTshirt from './assets/xbox_tshirt.png'
 import SuccessParticipatedImg from './assets/success_participated.png';
 import './App.css'
 
+import {motion} from 'motion/react';
+
 import {useNavigate} from 'react-router'
 
 // Components
@@ -102,62 +104,71 @@ function App() {
           <div className="hero">
           </div>
             <div>
-              <h1>DXL Missionen</h1>
-              {isAccessible ? <p style={{fontSize: '1.5rem', fontWeight: "bold"}}>{formattedDate}</p> : <p>Website is not accessible</p>}
-              <p>
-                <strong>Danish Xbox League</strong> afholder til dette års Gamebox Festival en konkurrence hver dag hvor du får chancen for at vinde fede XBOX præmier
-              </p>
-              <p>
-                Der bliver trukket en vinder for hver dag under festivalen
-              </p>
-              <p>
-                I tidsrummet:
-              </p>
-              <p><strong>Fredag: 19:00</strong></p>
-              <p><strong>Lørdag: 19:00</strong></p>
-              <p><strong>Søndag: 17:00</strong></p>
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+                <h1>DXL Missionen</h1>
+                {isAccessible ? <p style={{fontSize: '1.5rem', fontWeight: "bold"}}>{formattedDate}</p> : <p>Website is not accessible</p>}
+                <p>
+                  <strong>Danish Xbox League</strong> afholder til dette års Gamebox Festival en konkurrence hver dag hvor du får chancen for at vinde fede XBOX præmier
+                </p>
+                <p>
+                  Der bliver trukket en vinder for hver dag under festivalen
+                </p>
+                <p>
+                  I tidsrummet:
+                </p>
+                <p><strong>Fredag: 19:00</strong></p>
+                <p><strong>Lørdag: 19:00</strong></p>
+                <p><strong>Søndag: 17:00</strong></p>
+              </motion.div>
             </div>
           </section>
-          <section className="prices-grid">
-            <div className="price">
-              <div className="image-item">
-                  <img src={XboxController} alt="Xbox Controller" height={400} />
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+            <section className="prices-grid">
+              <div className="price">
+                <div className="image-item">
+                    <img src={XboxController} alt="Xbox Controller" height={400} />
+                </div>
+                <h3 className="item-heading">Xbox Controller</h3>
               </div>
-              <h3 className="item-heading">Xbox Controller</h3>
-            </div>
-            <div className="price">
-              <div className="image-item">
-                  <img src={XboxTshirt} alt="Xbox T-shirt" height={300} />
+              <div className="price">
+                <div className="image-item">
+                    <img src={XboxTshirt} alt="Xbox T-shirt" height={300} />
+                </div>
+                <h3 className='item-heading'>Xbox T-shirt</h3>
               </div>
-              <h3 className='item-heading'>Xbox T-shirt</h3>
-            </div>
-          </section>
-          <section>
-            <p>
-              For at deltage i konkurrencen for hver dag skal du klare forskellige opgaver der foretages på Danish Xbox League’s stand du finder under festivalen
-            </p>
-            <h3>
-              Praktisk info
-            </h3>
-            <ul>
-              <li>Hver deltager kan kun deltage 1 gang pr. dag.</li>
-              <li>Alle 3 aktiviteter skal gennemføres for at deltage.</li>
-              <li>En fra standen skal godkende deltagelsen.</li>
-              <li>Vinderen trækkes blandt dagens gyldige deltagelser.</li>
-            </ul>
-          </section>
-          <section id="get-started">
-            <h3>Skal vi komme igang?</h3>
-            <p>Er du klar til at deltage i konkurrencen?</p>
-            <button onClick={handleStart} className="cta-button">Ja, lad os komme igang!</button>
-          </section>
+            </section>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }}>
+            <section className=''>
+              <p>
+                For at deltage i konkurrencen for hver dag skal du klare forskellige opgaver der foretages på Danish Xbox League’s stand du finder under festivalen
+              </p>
+              <h3>
+                Praktisk info
+              </h3>
+              <ul>
+                <li>Hver deltager kan kun deltage 1 gang pr. dag.</li>
+                <li>Alle 3 aktiviteter skal gennemføres for at deltage.</li>
+                <li>En fra standen skal godkende deltagelsen.</li>
+                <li>Vinderen trækkes blandt dagens gyldige deltagelser.</li>
+              </ul>
+            </section>
+            <section id="get-started">
+              <h3>Skal vi komme igang?</h3>
+              <p>Er du klar til at deltage i konkurrencen?</p>
+              <button onClick={handleStart} className="cta-button">Ja, lad os komme igang!</button>
+            </section>
+          </motion.div>
           </>
         ) : (
           <>
             <section id="center" className="allready-participated">
-              <img src={SuccessParticipatedImg} alt="Success" />
-              <p>Det ser ud til du allerede har deltaget i dagens konkurrence.</p>
-              <p>Vi har lodtrækning hver dag under festivalen, så du kan prøve igen i morgen!</p>
+              <motion.div initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
+                <img src={SuccessParticipatedImg} alt="Success" />
+                <h1>Du har allerede deltaget i dagens konkurrence</h1>
+                <p>Det ser ud til du allerede har deltaget i dagens konkurrence.</p>
+                <p>Vi har lodtrækning hver dag under festivalen, så du kan prøve igen i morgen!</p>
+              </motion.div>
             </section>
           </>
         )}

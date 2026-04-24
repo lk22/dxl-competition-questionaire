@@ -356,6 +356,14 @@ header {
 section.allready-participated {
   font-size: 26px;
   text-align: center;
+  img {
+    margin-bottom: 40px;
+    width: 450px;
+    height: 450px;
+  }
+  p {
+    width: 100%;
+  }
 }
 section.end-page {
   font-size: 26px;
@@ -364,4 +372,12 @@ section.end-page {
   .participated-name {
     text-transform: capitalize;
   }
+}
+
+section#get-started {
+  h3 {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  padding-block: 100px;
 }
